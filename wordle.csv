@@ -1,4 +1,4 @@
-Date,Contest number,Word,Number of  reported results,Number in hard mode,1 try,2 tries,3 tries,4 tries,5 tries,6 tries,7 or more tries (X)
+Date,Contest_Num,Word,Num_Rep_Results,Number_Hard_Mode,1try,2tries,3tries,4tries,5tries,6tries,7_plus
 12/31/2022,560,manly,20380,1899,0,2,17,37,29,12,2
 12/30/2022,559,molar,21204,1973,0,4,21,38,26,9,1
 12/29/2022,558,havoc,20001,1919,0,2,16,38,30,12,2
