@@ -1,3 +1,6 @@
+import matplotlib.pyplot as plt
+from scipy.optimize import curve_fit
+import numpy as np
 import pandas as pd
 import plotly.express as px
 
@@ -14,5 +17,32 @@ def scrabble_score(word):
 # give a plot of Num_Rep_Results and Number_Hard_Mode over time
 # reverse order of x axis
 df = df.iloc[::-1]
-fig = px.line(df, x='Date', y=['Num_Rep_Results', 'Number_Hard_Mode'])
+
+# date to seconds from epoch
+df['x'] = pd.to_datetime(df['Date']).astype(np.int64) // 10**9
+df['y'] = df['Num_Rep_Results']
+
+# get the x value at the peak y value
+peak_x = df.iloc[df['y'].argmax()]['x']
+df['x'] = df['x'][df['x'] > peak_x]
+df['y'] = df['y'][df['x'] > peak_x]
+
+fig = px.line(df, x='x', y='y')
 fig.show()
+
+# Define the exponential decay function
+def exponential_decay(x, a, b, c):
+    return a * np.exp(-b * x) + c
+
+# Fit the exponential decay curve to the data
+popt, pcov = curve_fit(exponential_decay, df['x'], df['y'])
+
+# Print the fitted parameters
+print(popt)
+
+# Plot the data and the fitted curve
+
+plt.scatter(df['x'], df['y'], label='Data')
+plt.plot(df['x'], exponential_decay(df['x'], *popt), 'r-', label='Fit')
+plt.show()
+print('lol')
