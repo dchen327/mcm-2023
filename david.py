@@ -64,3 +64,5 @@ def scrabble_score(word):
 
 df['Scrabble_Score'] = df['Word'].apply(scrabble_score)
 df['Scrabble_Score'].describe()
+
+df.to_csv('features.csv', index=False)
