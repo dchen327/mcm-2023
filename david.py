@@ -53,4 +53,14 @@ def levenshtein(s1, s2):
     return previous_row[-1]
 
 df['Distance_To_Wordle_Words'] = df['Word'].apply(distance_to_wordle_words)
-df['Distance_To_Wordle_Words'].describe()
+
+def scrabble_score(word):
+    letter_points = {
+        'a': 1, 'b': 3, 'c': 3, 'd': 2, 'e': 1, 'f': 4, 'g': 2, 'h': 4, 'i': 1,
+        'j': 8, 'k': 5, 'l': 1, 'm': 3, 'n': 1, 'o': 1, 'p': 3, 'q': 10, 'r': 1,
+        's': 1, 't': 1, 'u': 1, 'v': 4, 'w': 4, 'x': 8, 'y': 4, 'z': 10
+    }
+    return sum([letter_points.get(letter, 0) for letter in word.lower()])
+
+df['Scrabble_Score'] = df['Word'].apply(scrabble_score)
+df['Scrabble_Score'].describe()
