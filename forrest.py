@@ -27,6 +27,9 @@ peak_x = df.iloc[df['y'].argmax()]['x']
 df['x'] = df['x'][df['x'] > peak_x]
 df['y'] = df['y'][df['x'] > peak_x]
 
+# df drop na
+df = df.dropna()
+
 fig = px.line(df, x='x', y='y')
 fig.show()
 
@@ -36,13 +39,11 @@ def exponential_decay(x, a, b, c):
 
 # Fit the exponential decay curve to the data
 popt, pcov = curve_fit(exponential_decay, df['x'], df['y'])
-
-# Print the fitted parameters
 print(popt)
+ls = np.linspace(df['x'].min(), df['x'].max(), 1000)
 
-# Plot the data and the fitted curve
-
-plt.scatter(df['x'], df['y'], label='Data')
-plt.plot(df['x'], exponential_decay(df['x'], *popt), 'r-', label='Fit')
-plt.show()
+# Create a scatter plot for the data
+fig = px.scatter(df, x='x', y='y', title='Exponential Decay Fit')
+fig.add_trace(px.line(x=ls, y=exponential_decay(ls, *popt)).data[0])
+fig.show()
 print('lol')
